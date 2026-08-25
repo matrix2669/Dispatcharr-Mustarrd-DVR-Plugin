@@ -10,6 +10,7 @@ Before deleting a branch, transfer user-visible results to `CHANGELOG.md` and du
 |---|---|---|---|---|---|
 | `main` | long-lived | active | repository history | stable source | Approved source baseline; production publication still requires every documented release and dependency gate. |
 | `dev` | long-lived | active | `main` | `main` | Integrate and validate the next plugin version; synchronized for the `0.2.13-beta.2` dependency-audit build. |
+| `feature/workspace-standards-reconciliation` | work | active; validated | `dev` at `606d2c2` | `dev` | Add mandatory workspace standards drift and reconciliation guidance. |
 
 ## Active records
 
@@ -31,3 +32,13 @@ Before deleting a branch, transfer user-visible results to `CHANGELOG.md` and du
 ## Historical branch conversion
 
 All 14 branches from `v0.1.0` through `v0.2.12` were converted to annotated tags at their exact commits and deleted from GitHub on 2026-08-22. Their release history remains in `CHANGELOG.md`; the deleted branches are intentionally absent from the live branch index.
+
+### `feature/workspace-standards-reconciliation`
+
+- Purpose: record and enforce the mandatory workspace standards drift and reconciliation check before substantive project work.
+- Base: `dev` at `606d2c2`.
+- Intended target: `dev`.
+- Scope: `AGENT.md`, `WORKSPACE-STANDARDS.yaml`, and this branch ledger record only.
+- Exclusions: no plugin runtime, dependency contract, version, release, registry, scheduler, handoff, or safety behavior changes.
+- Validation: workspace standards validation and `git diff --check` pass; no code or test behavior changed.
+- Started: `2026-08-24`.
