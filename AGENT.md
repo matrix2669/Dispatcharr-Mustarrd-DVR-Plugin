@@ -55,6 +55,12 @@ For significant changes, run the workspace project-bootstrap/history gate: searc
 
 Track every current branch in `BRANCHES.md`. Before deleting one, transfer user-visible results to `CHANGELOG.md` and durable rationale to `DECISIONS.md`, then remove its live record.
 
+## Session completion and remote continuity
+
+GitHub is the authoritative continuation source. Start by fetching `origin` and resume from the exact remote head of the branch that owns the change. A repository-change request authorizes checkpoint commits and pushes to an isolated feature or fix branch. Before ending or handing off a session, preserve unrelated work, update branch/TODO/decision/dependency/validation records, run the applicable gates, commit every in-scope committable change, push every local commit, and verify through a fresh remote query that the exact GitHub head matches the intended local checkpoint. Incomplete work is pushed as explicit WIP with failures or unavailable validation recorded; never commit credentials, private data, excluded artifacts, or unrelated changes merely to clean the worktree.
+
+The checkpoint does not authorize merging into `dev` or `main`, tagging, changing either registry channel, releasing, deploying, force-pushing, or deleting a branch. Report the work branch, source integration, tag, registry, Release, dependency-readiness, and deployment states separately.
+
 ## Validation
 
 Run the complete `tests/` suite, compile all plugin Python modules, parse `plugin.json`, verify version agreement, and inspect the exact tagged archive. Whenever the supported or deployed Dispatcharr version changes, validate the manifest and plugin contract against the matching official `Dispatcharr/Dispatcharr` revision before publication.
