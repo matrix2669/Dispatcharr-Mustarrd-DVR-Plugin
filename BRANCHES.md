@@ -9,8 +9,8 @@ Before deleting a branch, transfer user-visible results to `CHANGELOG.md` and du
 | Branch | Type | Status | Base | Target | Purpose |
 |---|---|---|---|---|---|
 | `main` | long-lived | active | repository history | stable source | Approved source baseline; production publication still requires every documented release and dependency gate. |
-| `dev` | long-lived | active | `main` | `main` | Integrate and validate the next plugin version; synchronized for the `0.2.13-beta.2` dependency-audit build. |
-| `fix/zero-handoff-disabled` | fix | reviewed beta preparation | `dev` at `bff2963` | `dev` | Disable automatic Dispatcharr removal at zero minutes; publish approved beta.3. |
+| `dev` | long-lived | active | `main` | `main` | Integrate and validate the next plugin version; approved zero-handoff beta.3 is integrated. |
+| `fix/zero-handoff-disabled` | fix | integrated; retained | `dev` at `bff2963` | `dev` | Disable automatic Dispatcharr removal at zero minutes; publish approved beta.3. |
 | `feature/workspace-standards-reconciliation` | work | active; validated | `dev` at `606d2c2` | `dev` | Add mandatory workspace standards drift and reconciliation guidance. |
 
 ## Active records
@@ -24,10 +24,10 @@ Before deleting a branch, transfer user-visible results to `CHANGELOG.md` and du
 ### `dev`
 
 - Purpose: integrate the next version under the standalone workflow.
-- Current plugin version: `0.2.13-beta.2`.
-- Current state: repository-only rename metadata, crop-safe logo, and tag-based workflow are integrated for development publication.
+- Current plugin version: `0.2.13-beta.3`; immutable test tag `v0.2.13-beta.3` resolves to `c5adaf5215daba6ea7211c9a5257b4f2beb8237f`.
+- Current state: scoped zero-handoff fix and beta.3 preparation were fast-forward integrated on 2026-10-09. Production dependency gates remain open.
 - Preserved identity: display name `Mustarrd DVR Handoff`, slug/source directory `mustarrd-dvr-handoff`, configuration, scheduler state, and runtime behavior.
-- Validation: 18 unit tests pass, including upstream- and fork-shaped Mustarrd payloads; all plugin modules compile; JSON and version agreement pass; the logo is a 1254×1254 PNG; 14 historical tag mappings were verified before their version branches were deleted.
+- Validation: all 23 unit tests pass; compilation, JSON and version agreement pass. Exact-source CI on owning branch/dev/tag passes (runs `37870492937`, `37870578490`, `37870578514`). Published beta archive passes disposable official Dispatcharr 0.31.0 installation/overwrite/loading and installed-package regression checks.
 - Deployment validation: `0.2.13-beta.1` was published through the renamed repository and development registry; the user confirmed the installation and resized logo work correctly in Dispatcharr.
 
 ## Historical branch conversion
@@ -51,3 +51,5 @@ All 14 branches from `v0.1.0` through `v0.2.12` were converted to annotated tags
 - Approved on 2026-10-09: integrate this scoped beta into source `dev`, publish immutable `v0.2.13-beta.3`, and update registry `dev`. Stable `main`, GitHub Release, live Dispatcharr operations, force pushes, and branch deletion remain excluded.
 - Validation: 23 unit tests pass; plugin Python compilation, JSON parsing, version agreement at unchanged 0.2.13-beta.2, existing tagged archive layout, standards reconciliation, and `git diff --check` pass. Independent review completed without blocking findings.
 - Original local checkpoint: `d0857c1`. Beta preparation passes all 23 unit tests and disposable official Dispatcharr 0.31.0 installation, beta.2-to-beta.3 overwrite, loader discovery, default merging and installed-package regressions. Added CI checks the exact source commit and archive; publication waits for its green run. Dependency production gates remain open; live installation is not authorized.
+
+- Beta.3 publication evidence: source/dev/tag `c5adaf5215daba6ea7211c9a5257b4f2beb8237f`, tag object `8b5727062277f976b647d3940151369103e8f99e`, source/dev/tag CI green. Archive runtime matches tag byte for byte; SHA-256 `90899f25f6696f07ed895f845bc1e4dc3163407b1990dbe66dac6e9323b6bbf5`. Registry publication follows its own reviewed metadata change. Work branch is retained; live installation remains pending user action.
