@@ -123,3 +123,12 @@ The 2026-08-22 recovery reviewed the complete local Git history, every tag and l
 - `Update standalone release workflow` (`01a02969-01f0-7803-8031-37f7f4f2803c`)
 
 `Bootstrap repository project` (`6a88943c-c668-83ea-a341-6424daeb526a`) was inspected and excluded because it documents the separate VOD Newznab/Arr Stack Connector project. No archived Codex tasks or synced `sources/` files were available. GitHub-hosted issues and pull requests were represented only where captured in accessible history; no undocumented rationale is inferred from unavailable sources.
+
+## ADR-012: Allow mirroring without automatic Dispatcharr removal
+
+**Status:** Accepted
+**Date:** 2026-10-09
+
+The operator requested that zero minutes retain the scheduled Dispatcharr recording. `handoff_minutes` now accepts numeric or persisted string zero as disabling final handoff, while mirroring continues. Positive minutes retain the existing final-window verification and deletion; missing or invalid values retain the 60-minute default. Negative values retain the existing one-minute clamp. This amends ADR-002 only for the explicit zero setting. Both recorders may run when removal is disabled. Manual cancellation and scheduler removal remain unchanged. All automatic entry points must use the same guarded handoff path; regression tests must cover zero, positive windows, and defaults.
+
+Publication, integration, manifests, versions, tags, and live recording operations are outside this local-only task. The explicit task instruction supersedes standing checkpoint-push authorization for this change.

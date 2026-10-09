@@ -2,6 +2,12 @@
 
 All notable user-visible changes are documented here. Architecture rationale belongs in `DECISIONS.md`.
 
+## [Unreleased]
+
+### Fixed
+
+- Treat `handoff_minutes` set to 0 as disabling automatic Dispatcharr recording removal while retaining Mustarrd mirroring. Positive values and the 60-minute default keep the existing verified handoff behavior.
+
 ## [0.2.13-beta.2] - 2026-08-22
 
 ### Added

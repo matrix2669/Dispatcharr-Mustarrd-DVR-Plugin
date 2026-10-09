@@ -42,3 +42,11 @@ All 14 branches from `v0.1.0` through `v0.2.12` were converted to annotated tags
 - Exclusions: no plugin runtime, dependency contract, version, release, registry, scheduler, handoff, or safety behavior changes.
 - Validation: workspace standards validation and `git diff --check` pass; no code or test behavior changed.
 - Started: `2026-08-24`.
+
+### `fix/zero-handoff-disabled`
+
+- Base: fresh `origin/dev` at `bff2963`; target: `dev` after authorized testing/integration.
+- Scope: allow zero `handoff_minutes` to preserve Dispatcharr schedules while mirroring; tests, help text, README, changelog, decision capture, standards reconciliation.
+- Exclusions: publication, promotion, versions, tags, registry manifests, live Dispatcharr operations.
+- Validation: 23 unit tests pass; plugin Python compilation, JSON parsing, version agreement at unchanged 0.2.13-beta.2, existing tagged archive layout, standards reconciliation, and `git diff --check` pass. Independent review completed without blocking findings.
+- Local-only checkpoint requested on 2026-10-09. Next step: authorized disposable development testing before integration or release; dependency production gates remain open.

@@ -725,9 +725,11 @@ def run_handoff(settings: dict[str, Any], task_logger=None) -> dict[str, Any]:
     handoff_minutes = _coerce_int(
         settings.get("handoff_minutes"),
         60,
-        1,
+        None,
         min(mirror_hours * 60, 24 * 60),
     )
+    if handoff_minutes != 0:
+        handoff_minutes = max(1, handoff_minutes)
     account_id = _coerce_int(settings.get("mustarrd_account_id"), 1, 1)
     dry_run = bool(settings.get("dry_run", False))
     now = timezone.now()
@@ -934,7 +936,9 @@ def run_handoff(settings: dict[str, Any], task_logger=None) -> dict[str, Any]:
                     }
                 )
 
-            inside_final_window = recording.start_time <= final_end
+            inside_final_window = (
+                handoff_minutes > 0 and recording.start_time <= final_end
+            )
             if not inside_final_window:
                 continue
 

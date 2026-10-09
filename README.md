@@ -40,6 +40,8 @@ Keeping the plugin under a fixed directory gives Dispatcharr a stable plugin key
 6. Only after those checks pass does the plugin delete the Dispatcharr recording.
 7. Any failure leaves the Dispatcharr recording intact.
 
+Set **Final Handoff Before Airtime (minutes)** (`handoff_minutes`) to **0** to disable automatic removal of scheduled recordings from Dispatcharr. Mirroring to Mustarrd continues, so both systems can record. Positive values retain the verified final-window handoff; the default remains 60 minutes.
+
 ## Default filename templates
 
 TV:

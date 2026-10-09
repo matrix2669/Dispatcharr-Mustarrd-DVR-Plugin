@@ -55,7 +55,7 @@
       "label": "Final Handoff Before Airtime (minutes)",
       "type": "number",
       "default": 60,
-      "help_text": "Inside this window the plugin confirms Mustarrd currently sees the channel as catch-up capable and verifies the schedule before removing the Dispatcharr recording."
+      "help_text": "Set to 0 to keep scheduled recordings in Dispatcharr while continuing to mirror them to Mustarrd. With a positive value, inside this window the plugin confirms Mustarrd currently sees the channel as catch-up capable and verifies the schedule before removing the Dispatcharr recording."
     },
     {
       "id": "handoff_cron",

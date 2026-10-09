@@ -15,6 +15,8 @@ This plugin uses Dispatcharr as the DVR/series-pass UI and Mustarrd as the recor
 
 Manual time recordings on catch-up channels are handed off as an exact synthetic time window. EPG-backed recordings that cannot be matched confidently against Dispatcharr's current guide are kept in Dispatcharr rather than risking the wrong Mustarrd program.
 
+Set **Final Handoff Before Airtime (minutes)** (`handoff_minutes`) to **0** to keep scheduled recordings in Dispatcharr. Mirroring continues, so both systems can record. Positive values retain the verified final-window handoff; the default remains 60 minutes.
+
 ## Automatic scheduler
 
 Version 0.2.12 no longer uses a plugin-defined Celery Beat task for automatic mirror/handoff checks. Dispatcharr 0.29 can load plugin tasks too late for the default prefork Celery consumer, causing `Received unregistered task` errors even though the task exists in child workers.
@@ -149,6 +151,7 @@ Cron: */5 * * * * UTC
 
 The plugin never deletes a Dispatcharr recording when:
 
+- final handoff is set to 0 minutes;
 - Dispatcharr says the channel does not support catch-up;
 - Mustarrd authentication or API access fails;
 - an EPG-backed recording cannot be matched confidently against Dispatcharr's current guide;
