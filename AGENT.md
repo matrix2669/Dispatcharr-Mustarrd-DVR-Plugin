@@ -63,6 +63,8 @@ The checkpoint does not authorize merging into `dev` or `main`, tagging, changin
 
 ## Validation
 
+The `Validate plugin` workflow runs source checks plus disposable pinned official Dispatcharr installer/loader validation for exact commits and tags. `scripts/validate_dispatcharr.py` stubs external framework/database boundaries and must not be described as live end-to-end validation.
+
 Run the complete `tests/` suite, compile all plugin Python modules, parse `plugin.json`, verify version agreement, and inspect the exact tagged archive. Whenever the supported or deployed Dispatcharr version changes, validate the manifest and plugin contract against the matching official `Dispatcharr/Dispatcharr` revision before publication.
 
 Whenever the deployed Mustarrd version or upstream `main` changes, refresh `DEPENDENCIES.md`, compare all recorded contracts against current upstream, run the upstream-shaped compatibility tests, and perform a live dry-run before publication.

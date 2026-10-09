@@ -2,7 +2,7 @@
 
 All notable user-visible changes are documented here. Architecture rationale belongs in `DECISIONS.md`.
 
-## [Unreleased]
+## [0.2.13-beta.3] - 2026-10-09
 
 ### Fixed
 

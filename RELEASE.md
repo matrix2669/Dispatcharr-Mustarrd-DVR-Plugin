@@ -16,6 +16,8 @@ python3 -m py_compile mustarrd-dvr-handoff/*.py
 python3 -m json.tool mustarrd-dvr-handoff/plugin.json >/dev/null
 ```
 
+Run the `Validate plugin` GitHub workflow for the exact source commit before registry publication. Its disposable official Dispatcharr installer/loader harness uses pinned 0.31.0 source with framework/database boundaries stubbed and does not replace live end-to-end dependency validation.
+
 Also verify version agreement, the exact tag commit, the archive's `mustarrd-dvr-handoff/` layout, the logo URL, and a Dispatcharr install/update. Recheck the official Dispatcharr plugin contract whenever its supported or deployed version changes.
 
 ## Beta publication

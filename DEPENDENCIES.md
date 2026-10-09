@@ -44,3 +44,9 @@ Before publishing any plugin tag or after changing the deployed Mustarrd version
 For closed, unmerged, split, or purportedly superseded dependency PRs, compare the original PR change-by-change against what actually merged. Never infer complete coverage from the maintainer's summary, shared ancestry, similar PR titles, or passing tests for only the merged subset.
 
 Closed or superseded PRs remain historical evidence, not proof that their dependencies landed.
+
+## Zero-handoff beta disposable Dispatcharr compatibility (2026-10-09)
+
+Official Dispatcharr `v0.31.0` was freshly resolved to `bcbb68c4f054ee56383a41604cfcd7302b85da66`. Reviewed `apps/plugins/api_views.py` installer and prerelease comparison, `loader.py` discovery/default merging, and `serializers.py` field/settings types. The official installer sanitizes `mustarrd-dvr-handoff` to `mustarrd_dvr_handoff`; it installs and overwrites the temporary beta.2 package with beta.3, retaining runtime modules and logo. Official loader discovery reads the new manifest and runtime version and preserves numeric/string zero rather than replacing it with defaults. Prerelease comparison detects beta.3 as different from beta.2.
+
+`scripts/validate_dispatcharr.py` executes the unmodified official installer functions and complete loader against disposable files, with external framework/database boundaries stubbed. The installed package passes handoff regressions. This is compatibility evidence, not live service, API database persistence, or upstream Mustarrd end-to-end validation. The supported minimum stays v0.29.0; existing production dependency gates remain open.

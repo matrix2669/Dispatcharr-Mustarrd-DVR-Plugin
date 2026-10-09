@@ -10,6 +10,7 @@ Before deleting a branch, transfer user-visible results to `CHANGELOG.md` and du
 |---|---|---|---|---|---|
 | `main` | long-lived | active | repository history | stable source | Approved source baseline; production publication still requires every documented release and dependency gate. |
 | `dev` | long-lived | active | `main` | `main` | Integrate and validate the next plugin version; synchronized for the `0.2.13-beta.2` dependency-audit build. |
+| `fix/zero-handoff-disabled` | fix | reviewed beta preparation | `dev` at `bff2963` | `dev` | Disable automatic Dispatcharr removal at zero minutes; publish approved beta.3. |
 | `feature/workspace-standards-reconciliation` | work | active; validated | `dev` at `606d2c2` | `dev` | Add mandatory workspace standards drift and reconciliation guidance. |
 
 ## Active records
@@ -47,6 +48,6 @@ All 14 branches from `v0.1.0` through `v0.2.12` were converted to annotated tags
 
 - Base: fresh `origin/dev` at `bff2963`; target: `dev` after authorized testing/integration.
 - Scope: allow zero `handoff_minutes` to preserve Dispatcharr schedules while mirroring; tests, help text, README, changelog, decision capture, standards reconciliation.
-- Exclusions: publication, promotion, versions, tags, registry manifests, live Dispatcharr operations.
+- Approved on 2026-10-09: integrate this scoped beta into source `dev`, publish immutable `v0.2.13-beta.3`, and update registry `dev`. Stable `main`, GitHub Release, live Dispatcharr operations, force pushes, and branch deletion remain excluded.
 - Validation: 23 unit tests pass; plugin Python compilation, JSON parsing, version agreement at unchanged 0.2.13-beta.2, existing tagged archive layout, standards reconciliation, and `git diff --check` pass. Independent review completed without blocking findings.
-- Local-only checkpoint requested on 2026-10-09. Next step: authorized disposable development testing before integration or release; dependency production gates remain open.
+- Original local checkpoint: `d0857c1`. Beta preparation passes all 23 unit tests and disposable official Dispatcharr 0.31.0 installation, beta.2-to-beta.3 overwrite, loader discovery, default merging and installed-package regressions. Added CI checks the exact source commit and archive; publication waits for its green run. Dependency production gates remain open; live installation is not authorized.

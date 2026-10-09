@@ -132,3 +132,10 @@ The 2026-08-22 recovery reviewed the complete local Git history, every tag and l
 The operator requested that zero minutes retain the scheduled Dispatcharr recording. `handoff_minutes` now accepts numeric or persisted string zero as disabling final handoff, while mirroring continues. Positive minutes retain the existing final-window verification and deletion; missing or invalid values retain the 60-minute default. Negative values retain the existing one-minute clamp. This amends ADR-002 only for the explicit zero setting. Both recorders may run when removal is disabled. Manual cancellation and scheduler removal remain unchanged. All automatic entry points must use the same guarded handoff path; regression tests must cover zero, positive windows, and defaults.
 
 Publication, integration, manifests, versions, tags, and live recording operations are outside this local-only task. The explicit task instruction supersedes standing checkpoint-push authorization for this change.
+
+## ADR-013: Publish the zero-retention change as a development beta
+
+**Status:** Accepted
+**Date:** 2026-10-09
+
+The operator approved scoped source `dev` integration and beta publication through registry `dev`, explicitly correcting the stale `dev-test` destination. Publish the next immutable beta, `0.2.13-beta.3`, after full regression tests, official Dispatcharr 0.31.0 installer/loader checks in temporary directories, exact-source CI, and independent review. Add a source CI workflow because this repository had none. Keep existing minimum Dispatcharr v0.29.0, positive/default retention contracts, prior tags, unrelated plugins, and production dependency gates unchanged. Stable promotion, GitHub Release, live installation and recordings are excluded. This supersedes ADR-012’s local-only publication limit for this approved beta. Revisit if archive identity, compatibility, or the required checks change.
