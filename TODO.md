@@ -110,6 +110,6 @@ When every item is complete, transfer durable findings into `DEPENDENCIES.md` an
 
 - [x] Implement independent optional pre/post overrides, blank legacy defaults and explicit zero, with strict 0–120-minute validation.
 - [x] Cover derived/manual windows, no double padding, serialization, existing mismatch retention, positive final verification and DST regression.
-- [ ] Publish the approved beta owning source checkpoint and integrate into dev after standards reconciliation and exact-source checks.
-- [ ] Publish approved 0.3.0-beta.1 and registry-dev update with exact-source CI and disposable installer checks; retain existing production-readiness blockers.
+- [x] Publish the approved beta owning source checkpoint and integrate into dev after standards reconciliation and exact-source checks.
+- [x] Publish approved 0.3.0-beta.1 and registry-dev update with exact-source CI and disposable installer checks; retain existing production-readiness blockers.
 - [ ] Install only after separate approval and read-only confirmation of deployed dependency versions. Do not create/cancel recordings or restart services as part of this feature task.

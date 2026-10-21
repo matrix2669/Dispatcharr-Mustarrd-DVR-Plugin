@@ -9,7 +9,7 @@ Before deleting a branch, transfer user-visible results to `CHANGELOG.md` and du
 | Branch | Type | Status | Base | Target | Purpose |
 |---|---|---|---|---|---|
 | `main` | long-lived | active | repository history | stable source | Approved source baseline; production publication still requires every documented release and dependency gate. |
-| `dev` | long-lived | active | `main` | `main` | Integrate and validate the next plugin version; approved zero-handoff beta.3 is integrated. |
+| `dev` | long-lived | active | `main` | `main` | Integrate and validate the next plugin version; approved independent-padding beta 0.3.0-beta.1 is integrated. |
 | `fix/zero-handoff-disabled` | fix | integrated; retained | `dev` at `bff2963` | `dev` | Disable automatic Dispatcharr removal at zero minutes; publish approved beta.3. |
 | `feature/workspace-standards-reconciliation` | work | active; validated | `dev` at `606d2c2` | `dev` | Add mandatory workspace standards drift and reconciliation guidance. |
 
@@ -24,8 +24,8 @@ Before deleting a branch, transfer user-visible results to `CHANGELOG.md` and du
 ### `dev`
 
 - Purpose: integrate the next version under the standalone workflow.
-- Current plugin version: `0.2.13-beta.3`; immutable test tag `v0.2.13-beta.3` resolves to `c5adaf5215daba6ea7211c9a5257b4f2beb8237f`.
-- Current state: scoped zero-handoff fix and beta.3 preparation were fast-forward integrated on 2026-10-09. Production dependency gates remain open.
+- Current plugin version: `0.3.0-beta.1`; immutable tag resolves to `b91e6b4729d2620b7d14355a049e0bf8be1d5910`. Previous `v0.2.13-beta.3` remains immutable.
+- Current state: independent-padding beta fast-forward integrated on 2026-10-21; publication evidence below. Production dependency gates remain open.
 - Preserved identity: display name `Mustarrd DVR Handoff`, slug/source directory `mustarrd-dvr-handoff`, configuration, scheduler state, and runtime behavior.
 - Validation: all 23 unit tests pass; compilation, JSON and version agreement pass. Exact-source CI on owning branch/dev/tag passes (runs `37870492937`, `37870578490`, `37870578514`). Published beta archive passes disposable official Dispatcharr 0.31.0 installation/overwrite/loading and installed-package regression checks.
 - Deployment validation: `0.2.13-beta.1` was published through the renamed repository and development registry; the user confirmed the installation and resized logo work correctly in Dispatcharr.
@@ -70,3 +70,19 @@ All 14 branches from `v0.1.0` through `v0.2.12` were converted to annotated tags
   Record completed publication evidence in the workspace checkpoint.
 - Governance: reviewed central lifecycle/approval/exact-SHA policy changes and
   aligned AGENT.md; reconcile the applied baseline for this promotion boundary.
+
+- Beta publication completed: source owning/dev/tag accepted commit
+  `b91e6b4729d2620b7d14355a049e0bf8be1d5910`, immutable `v0.3.0-beta.1` tag object
+  `98a5baaf6cfcc0768e35ea5ef2682bed87eb19c0`. Exact-source CI runs `39523081671`,
+  `39523140136`, `39523141740` pass both pinned official Dispatcharr versions.
+- Archive SHA-256 `6ef378d2d5dfc5858fa322e42e5cf9d44ebe82adb3394bd305d128520212261f`
+  byte-matches the release runtime and passed official 0.31.0/0.32.0 clean install,
+  prior-beta overwrite, loader/default merging and 16 installed-package tests each.
+  All 34 source tests pass; independent release review reports no blockers.
+- Registry dev `49f063478d5ba030bf3cd63e1c78f3728e44cbb8` advertises this exact beta.
+  Registry CI `39523294261`, seven tests, validator, independent review and public
+  raw root/detail/archive readback pass. Prior history and unrelated entries are
+  preserved. Post-publication source documentation checkpoint may advance dev
+  without moving the immutable release tag. No runtime change in that checkpoint.
+- Installation and live validation remain pending; no live recordings, Mustarrd
+  changes, restarts, stable main or GitHub Release operations occurred.
