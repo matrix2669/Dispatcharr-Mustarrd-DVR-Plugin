@@ -27,7 +27,7 @@ Before deleting a branch, transfer user-visible results to `CHANGELOG.md` and du
 - Current plugin version: `0.3.0-beta.1`; immutable tag resolves to `b91e6b4729d2620b7d14355a049e0bf8be1d5910`. Previous `v0.2.13-beta.3` remains immutable.
 - Current state: independent-padding beta fast-forward integrated on 2026-10-21; publication evidence below. Production dependency gates remain open.
 - Preserved identity: display name `Mustarrd DVR Handoff`, slug/source directory `mustarrd-dvr-handoff`, configuration, scheduler state, and runtime behavior.
-- Validation: all 23 unit tests pass; compilation, JSON and version agreement pass. Exact-source CI on owning branch/dev/tag passes (runs `37870492937`, `37870578490`, `37870578514`). Published beta archive passes disposable official Dispatcharr 0.31.0 installation/overwrite/loading and installed-package regression checks.
+- Validation: all 34 unit tests pass; compilation, JSON and version agreement pass. Exact beta source CI on owning branch/dev/tag passes (runs `39523081671`, `39523140136`, `39523141740`). Published beta archive passes disposable official Dispatcharr 0.31.0 and 0.32.0 installation/overwrite/loading and 16 installed-package regressions per version. Independent exact-release review reports no blockers.
 - Deployment validation: `0.2.13-beta.1` was published through the renamed repository and development registry; the user confirmed the installation and resized logo work correctly in Dispatcharr.
 
 ## Historical branch conversion
