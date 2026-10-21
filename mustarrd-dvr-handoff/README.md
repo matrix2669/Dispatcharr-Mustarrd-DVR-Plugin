@@ -17,6 +17,41 @@ Manual time recordings on catch-up channels are handed off as an exact synthetic
 
 Set **Final Handoff Before Airtime (minutes)** (`handoff_minutes`) to **0** to keep scheduled recordings in Dispatcharr. Mirroring continues, so both systems can record. Positive values retain the verified final-window handoff; the default remains 60 minutes.
 
+## Recording padding overrides
+
+**Mustarrd Pre-recording Padding Override (minutes)** (`pre_padding_minutes`) and
+**Mustarrd Post-recording Padding Override (minutes)** (`post_padding_minutes`) are
+independent optional whole numbers from **0 to 120 minutes**. Leave a field blank
+to keep the existing behavior for that side; enter **0** to explicitly disable
+that side's padding. Negative, fractional, nonnumeric, or out-of-range values stop
+the pass with an error before any schedule or recording is changed.
+
+For EPG recordings, a configured override replaces that side's padding derived
+from the saved Dispatcharr recording versus its original EPG window. It is not
+added to the derived padding. With both fields blank (the upgrade default), the
+plugin keeps its existing rounded, 0–120-minute derivation. The saved recording
+already reflects Dispatcharr DVR settings and any per-recording time changes;
+the plugin does not reread current global settings or invent a separate metadata
+padding precedence. Mustarrd receives unpadded program times and explicit padding
+values, so its global defaults cannot silently replace zero.
+
+For example, a recording with 3 minutes before and 7 minutes after its EPG window
+still gets 3/7 with blank fields. Setting pre to 10 and leaving post blank sends
+10/7. Setting both to 0 sends 0/0. Deliberately choosing a smaller override can
+shorten the Mustarrd recording relative to Dispatcharr.
+
+Manual recordings have no original EPG window to remove padding from. Their exact
+saved start/end remain the base; blank fields add no padding, and explicit values
+extend that window. EPG matching, timezone conversion, final handoff timing, and
+Dispatcharr's recording times are unchanged.
+
+Overrides apply to newly mirrored schedules. Existing Mustarrd schedules are
+never automatically rewritten: a padding mismatch retains the Dispatcharr
+fallback and reports `existing_mustarrd_schedule_mismatch`. Review any existing
+schedules separately before expecting changed options to affect them. Use **Dry
+Run** to inspect effective `pre_padding`/`post_padding` without creating schedules
+or deleting recordings.
+
 ## Automatic scheduler
 
 Version 0.2.12 no longer uses a plugin-defined Celery Beat task for automatic mirror/handoff checks. Dispatcharr 0.29 can load plugin tasks too late for the default prefork Celery consumer, causing `Received unregistered task` errors even though the task exists in child workers.

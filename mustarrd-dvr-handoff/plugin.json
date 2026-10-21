@@ -58,6 +58,22 @@
       "help_text": "Set to 0 to keep scheduled recordings in Dispatcharr while continuing to mirror them to Mustarrd. With a positive value, inside this window the plugin confirms Mustarrd currently sees the channel as catch-up capable and verifies the schedule before removing the Dispatcharr recording."
     },
     {
+      "id": "pre_padding_minutes",
+      "label": "Mustarrd Pre-recording Padding Override (minutes)",
+      "type": "number",
+      "default": "",
+      "placeholder": "Use Dispatcharr recording padding",
+      "help_text": "Optional whole number from 0 to 120 minutes. Blank preserves this side of the Dispatcharr recording padding; 0 explicitly disables this side. Replaces, rather than adds to, the derived padding. Manual recordings use their exact window as the base. Existing Mustarrd schedules are not changed; a mismatch keeps the Dispatcharr fallback."
+    },
+    {
+      "id": "post_padding_minutes",
+      "label": "Mustarrd Post-recording Padding Override (minutes)",
+      "type": "number",
+      "default": "",
+      "placeholder": "Use Dispatcharr recording padding",
+      "help_text": "Optional whole number from 0 to 120 minutes. Blank preserves this side of the Dispatcharr recording padding; 0 explicitly disables this side. Replaces, rather than adds to, the derived padding. Manual recordings use their exact window as the base. Existing Mustarrd schedules are not changed; a mismatch keeps the Dispatcharr fallback."
+    },
+    {
       "id": "handoff_cron",
       "label": "Mirror / Handoff Check Schedule (cron)",
       "type": "string",

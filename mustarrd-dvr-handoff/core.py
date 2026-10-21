@@ -66,6 +66,8 @@ DEFAULTS = {
     "mustarrd_account_id": 1,
     "mirror_hours": 72,
     "handoff_minutes": 60,
+    "pre_padding_minutes": "",
+    "post_padding_minutes": "",
     "handoff_cron": "*/5 * * * *",
     "tv_template": DEFAULT_TV_TEMPLATE,
     "movie_template": DEFAULT_MOVIE_TEMPLATE,
@@ -269,6 +271,27 @@ def _derive_padding(
     pre = max(0, min(120, int(round(pre_seconds / 60.0))))
     post = max(0, min(120, int(round(post_seconds / 60.0))))
     return pre, post
+
+
+def _padding_override(settings: dict[str, Any], name: str) -> int | None:
+    """Blank inherits recording padding; zero is a deliberate override."""
+    value = settings.get(name)
+    if value is None or (isinstance(value, str) and not value.strip()):
+        return None
+    if isinstance(value, bool):
+        raise ValueError(f"{name} must be blank or a whole number from 0 to 120 minutes")
+    if isinstance(value, str):
+        value = value.strip()
+        valid = re.fullmatch(r"[0-9]+", value) is not None
+        value = value.lstrip("0") or "0"
+        valid = valid and len(value) <= 3
+    else:
+        valid = isinstance(value, int) or (
+            isinstance(value, float) and math.isfinite(value) and value.is_integer()
+        )
+    if not valid or not 0 <= int(value) <= 120:
+        raise ValueError(f"{name} must be blank or a whole number from 0 to 120 minutes")
+    return int(value)
 
 
 def _program_key(
@@ -751,6 +774,14 @@ def run_handoff(settings: dict[str, Any], task_logger=None) -> dict[str, Any]:
         "details": [],
     }
 
+    try:
+        pre_override = _padding_override(settings, "pre_padding_minutes")
+        post_override = _padding_override(settings, "post_padding_minutes")
+    except ValueError as exc:
+        result.update(status="error", errors=1, message=str(exc))
+        log.warning("Invalid padding options: %s", exc)
+        return result
+
     recordings = list(
         Recording.objects.select_related("channel", "channel__epg_data")
         .filter(start_time__gt=now, start_time__lte=mirror_end)
@@ -820,6 +851,13 @@ def run_handoff(settings: dict[str, Any], task_logger=None) -> dict[str, Any]:
                 match_mode = "manual"
                 pre_padding = 0
                 post_padding = 0
+
+            # Apply exactly once, relative to the unpadded EPG program (or the
+            # exact manual window). Never add Dispatcharr's global offsets again.
+            if pre_override is not None:
+                pre_padding = pre_override
+            if post_override is not None:
+                post_padding = post_override
 
             program = _restore_raw_episode_metadata(
                 client,

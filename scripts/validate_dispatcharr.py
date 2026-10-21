@@ -83,6 +83,13 @@ with tempfile.TemporaryDirectory(prefix='mustarrd-disposable-') as temp:
         merged = manager._merge_settings_with_defaults({'handoff_minutes': zero}, plugin.fields)
         assert merged['handoff_minutes'] == zero
     assert manager._merge_settings_with_defaults({}, plugin.fields)['handoff_minutes'] == 60
+    for name in ('pre_padding_minutes', 'post_padding_minutes'):
+        field = next(f for f in plugin.fields if f['id'] == name)
+        assert field['default'] == ''
+        assert manager._merge_settings_with_defaults({}, plugin.fields)[name] == ''
+        for value in (0, '0', '', None, 10):
+            merged = manager._merge_settings_with_defaults({name: value}, plugin.fields)
+            assert merged[name] == value
     assert plugin.instance._mustarrd_scheduler.thread is None
 
     # Run the actual handoff regression suite against the installed package's core,
@@ -90,7 +97,12 @@ with tempfile.TemporaryDirectory(prefix='mustarrd-disposable-') as temp:
     sys.path.insert(0, str(root / 'tests'))
     import test_handoff_retention
     test_handoff_retention.CORE = plugin.module._core
-    suite = unittest.defaultTestLoader.loadTestsFromModule(test_handoff_retention)
+    import test_padding
+    test_padding.CORE = plugin.module._core
+    suite = unittest.TestSuite([
+        unittest.defaultTestLoader.loadTestsFromModule(test_handoff_retention),
+        unittest.defaultTestLoader.loadTestsFromModule(test_padding),
+    ])
     assert unittest.TextTestRunner(verbosity=2).run(suite).wasSuccessful()
     plugin.instance.stop()
     print(f'Official Dispatcharr 0.31.0 disposable install/load/update checks passed: {version}')

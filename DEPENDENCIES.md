@@ -50,3 +50,14 @@ Closed or superseded PRs remain historical evidence, not proof that their depend
 Official Dispatcharr `v0.31.0` was freshly resolved to `bcbb68c4f054ee56383a41604cfcd7302b85da66`. Reviewed `apps/plugins/api_views.py` installer and prerelease comparison, `loader.py` discovery/default merging, and `serializers.py` field/settings types. The official installer sanitizes `mustarrd-dvr-handoff` to `mustarrd_dvr_handoff`; it installs and overwrites the temporary beta.2 package with beta.3, retaining runtime modules and logo. Official loader discovery reads the new manifest and runtime version and preserves numeric/string zero rather than replacing it with defaults. Prerelease comparison detects beta.3 as different from beta.2.
 
 `scripts/validate_dispatcharr.py` executes the unmodified official installer functions and complete loader against disposable files, with external framework/database boundaries stubbed. The installed package passes handoff regressions. This is compatibility evidence, not live service, API database persistence, or upstream Mustarrd end-to-end validation. The supported minimum stays v0.29.0; existing production dependency gates remain open.
+
+## Optional padding override contract inspection
+
+For the local independent-padding feature, inspected official Dispatcharr
+`cc68a83f5a02580fa4ca5257228d85d520414bb3` recording serializer/tasks and Mustarrd
+upstream `a6e5fac5024d9eae8db5846066fa1e319c321a5c` schedules API/download builder.
+Dispatcharr offsets are materialized in saved recording times; original EPG times
+remain in `custom_properties.program`. Mustarrd accepts explicit integer pre/post
+minutes in 0–120 and applies them to one catch-up window. The override does not
+require new endpoints or fork-only behavior. This focused inspection does not
+close the broader production audit or establish current live compatibility.

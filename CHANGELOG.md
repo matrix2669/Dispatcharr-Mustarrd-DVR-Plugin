@@ -2,6 +2,11 @@
 
 All notable user-visible changes are documented here. Architecture rationale belongs in `DECISIONS.md`.
 
+## [Unreleased]
+
+- Add independent optional Mustarrd pre-recording and post-recording padding overrides in minutes (0–120). Blank preserves existing Dispatcharr-derived padding; explicit zero disables that side. Invalid values stop the pass without writes. Existing Mustarrd schedules are not rewritten.
+- Keep EPG program timestamps unpadded and use exact saved windows for manual recordings, applying padding once through the schedule API.
+
 ## [0.2.13-beta.3] - 2026-10-09
 
 ### Fixed

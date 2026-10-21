@@ -38,7 +38,7 @@ For significant changes, run the workspace project-bootstrap/history gate: searc
 - Raw XMLTV season `-1` takes precedence over onscreen `S00` and maps to the airing year; a genuine `S00` without raw `-1` remains season zero.
 - Keep validation and dry-run paths non-destructive.
 - Do not mutate published tags or archives.
-- Preserve explicit padding derived from the Dispatcharr recording versus its original EPG window; do not substitute Mustarrd global defaults.
+- Preserve derived recording-versus-original-EPG padding on each side unless the user configures that side’s plugin override (ADR-014). Blank inherits; zero overrides. Do not add global Dispatcharr offsets again or substitute Mustarrd defaults. Invalid overrides stop the pass before writes.
 - Manual-time recordings may use an exact synthetic window, but unmatched EPG-backed recordings remain in Dispatcharr.
 - Treat `razzamatazm/mustarrd` as the production dependency. Track the last reviewed upstream commit and every required API/data contract in `DEPENDENCIES.md`; never assume the fork and upstream expose identical field names.
 - If a required Mustarrd capability exists only in `matrix2669/mustarrd`, record the exact fork branch/commit and upstream PR. Do not call the plugin upstream-production-ready until the PR is merged or the dependency is removed/moved into this plugin.

@@ -105,3 +105,11 @@ For each capability classified as required but missing upstream:
 - [ ] Create a production GitHub Release and update `dispatcharr-plugins:main` only after explicit user approval.
 
 When every item is complete, transfer durable findings into `DEPENDENCIES.md` and `DECISIONS.md`, release-visible results into `CHANGELOG.md`, then remove this completed checklist if it no longer has active work.
+
+## Independent padding feature — local validation checkpoint
+
+- [x] Implement independent optional pre/post overrides, blank legacy defaults and explicit zero, with strict 0–120-minute validation.
+- [x] Cover derived/manual windows, no double padding, serialization, existing mismatch retention, positive final verification and DST regression.
+- [ ] Publish the owning source checkpoint only after approval; integrate into dev only after standards reconciliation and separate approval.
+- [ ] Prepare an approved immutable beta and registry-dev update with exact-source CI and disposable installer checks; retain existing production-readiness blockers.
+- [ ] Install only after separate approval and read-only confirmation of deployed dependency versions. Do not create/cancel recordings or restart services as part of this feature task.

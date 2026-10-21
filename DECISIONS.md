@@ -27,7 +27,7 @@ Any authentication, API, matching, validation, or race failure leaves Dispatchar
 
 Manual-time recordings may be handed off as an exact synthetic window. EPG-backed recordings require a confident match against current guide data. If matching is uncertain, retain the Dispatcharr fallback rather than risk recording the wrong program.
 
-Padding is derived from the Dispatcharr recording window relative to the original EPG program and sent explicitly to Mustarrd. Mustarrd creates one padded catch-up request by shifting the start and extending duration; it does not fetch separate padding streams.
+By default, padding is derived from the Dispatcharr recording window relative to the original EPG program and sent explicitly to Mustarrd. ADR-014 narrowly supersedes this derive-only behavior for each deliberately configured plugin override. Mustarrd creates one padded catch-up request by shifting the start and extending duration; it does not fetch separate padding streams.
 
 ## ADR-004: Render Mustarrd filenames from Dispatcharr metadata
 
@@ -139,3 +139,22 @@ Publication, integration, manifests, versions, tags, and live recording operatio
 **Date:** 2026-10-09
 
 The operator approved scoped source `dev` integration and beta publication through registry `dev`, explicitly correcting the stale `dev-test` destination. Publish the next immutable beta, `0.2.13-beta.3`, after full regression tests, official Dispatcharr 0.31.0 installer/loader checks in temporary directories, exact-source CI, and independent review. Add a source CI workflow because this repository had none. Keep existing minimum Dispatcharr v0.29.0, positive/default retention contracts, prior tags, unrelated plugins, and production dependency gates unchanged. Stable promotion, GitHub Release, live installation and recordings are excluded. This supersedes ADR-012’s local-only publication limit for this approved beta. Revisit if archive identity, compatibility, or the required checks change.
+
+## ADR-014: Independent optional plugin padding overrides
+
+**Status:** Accepted for local implementation; publication and installation pending approval.
+**Authority:** User requested pre/post plugin options rather than only mirroring Dispatcharr. This narrowly supersedes ADR-003's derive-only rule when a side is configured; default derivation remains unchanged.
+
+Decision closure:
+
+- Which values and units? Independent `pre_padding_minutes` / `post_padding_minutes`, whole minutes 0–120 matching Mustarrd's API limit. UI defaults are empty strings. Missing, null and whitespace-only values inherit; zero (numeric or string) is an explicit override. Boolean, negative, fractional, nonnumeric, nonfinite and out-of-range values reject the entire pass before query/network/writes rather than truncating or silently changing recording length.
+- What wins? Configured plugin value replaces that side's derived padding. Otherwise retain the current rounded/clamped difference between saved recording times and original `custom_properties.program` times. Saved timestamps already embody global Dispatcharr offsets and individual time edits. Do not query current global settings or introduce a metadata-only fallback that could change legacy behavior. No Mustarrd global defaults are used: both integers are serialized explicitly.
+- How avoid double padding? Leave the resolved EPG program unchanged and send padding once in the schedule API fields. Manual recordings lack an original EPG window: preserve their exact saved window as the base, default to 0/0, and extend it only for configured overrides. Do not infer or remove unknown embedded padding from manual windows.
+- Can overrides shorten recordings? Yes, only through deliberate lower configured values, including zero; explain this in both READMEs. Blank retains current behavior. An unmatched EPG recording still remains in Dispatcharr.
+- What happens to existing schedules? Keep the existing mismatch protection, never update or duplicate them automatically, and retain Dispatcharr on padding mismatch. Newly created and final-window readback verification uses the same effective pair.
+- What remains unchanged? IDs, program matching/enrichment, filename rendering, UTC/DST conversion, cron, final handoff window and its zero-disable behavior, and fallback deletion safety checks.
+- Review triggers? Different Dispatcharr timestamp/metadata semantics, Mustarrd API padding bounds/application, or a request to rewrite existing schedules. Existing production dependency gates remain open; this change is not a production-compatibility claim.
+
+Evidence: official Dispatcharr `cc68a83f5a02580fa4ca5257228d85d520414bb3`, `apps/channels/serializers.py` applies global offsets to recording times while retaining the original program; `apps/channels/tasks.py` similarly reads DVR offsets for series scheduling/refresh. Mustarrd upstream `a6e5fac5024d9eae8db5846066fa1e319c321a5c`, `backend/api/schedules.py` bounds and persists both explicit fields (0–120); `backend/services/download_builder.py` shifts the catch-up start and extends duration once. Source inspection only; no live API/recording operations. Current deployed versions were not accessible from this local environment.
+
+Chat-independence/contradiction review: all product guidance above expresses defaults, precedence, deliberate shortening, manual semantics, mismatch behavior and unchanged safety contracts without requiring the conversation. Existing ADR-003 remains authoritative for unset options and matching policy.
