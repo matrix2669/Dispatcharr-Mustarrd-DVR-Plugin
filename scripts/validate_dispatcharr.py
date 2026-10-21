@@ -105,4 +105,4 @@ with tempfile.TemporaryDirectory(prefix='mustarrd-disposable-') as temp:
     ])
     assert unittest.TextTestRunner(verbosity=2).run(suite).wasSuccessful()
     plugin.instance.stop()
-    print(f'Official Dispatcharr 0.31.0 disposable install/load/update checks passed: {version}')
+    print(f'Official Dispatcharr disposable install/load/update checks passed: {version}; source={source}')

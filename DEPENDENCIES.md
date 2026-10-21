@@ -61,3 +61,13 @@ remain in `custom_properties.program`. Mustarrd accepts explicit integer pre/pos
 minutes in 0–120 and applies them to one catch-up window. The override does not
 require new endpoints or fork-only behavior. This focused inspection does not
 close the broader production audit or establish current live compatibility.
+
+Beta compatibility refresh (2026-10-21): official Dispatcharr v0.32.0
+`c52bf87acb7ff2d787d6dcfb9fe3d39999585912` and v0.31.0
+`bcbb68c4f054ee56383a41604cfcd7302b85da66` retain the used installer/loader,
+manifest/default merging and offset contracts. Isolated installer/overwrite and
+installed-package regression coverage is required for both. Parent reports the
+installed server is 0.32.0; no live action is performed here. Fresh Mustarrd
+upstream main remains `a6e5fac5024d9eae8db5846066fa1e319c321a5c` (read-only ref
+check), matching the focused padding contract inspection. Production audit and
+live validation remain open; this beta does not assert production readiness.

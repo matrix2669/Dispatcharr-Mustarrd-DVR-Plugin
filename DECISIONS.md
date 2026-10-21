@@ -142,7 +142,7 @@ The operator approved scoped source `dev` integration and beta publication throu
 
 ## ADR-014: Independent optional plugin padding overrides
 
-**Status:** Accepted for local implementation; publication and installation pending approval.
+**Status:** Accepted; beta publication approved, live installation pending.
 **Authority:** User requested pre/post plugin options rather than only mirroring Dispatcharr. This narrowly supersedes ADR-003's derive-only rule when a side is configured; default derivation remains unchanged.
 
 Decision closure:
@@ -158,3 +158,33 @@ Decision closure:
 Evidence: official Dispatcharr `cc68a83f5a02580fa4ca5257228d85d520414bb3`, `apps/channels/serializers.py` applies global offsets to recording times while retaining the original program; `apps/channels/tasks.py` similarly reads DVR offsets for series scheduling/refresh. Mustarrd upstream `a6e5fac5024d9eae8db5846066fa1e319c321a5c`, `backend/api/schedules.py` bounds and persists both explicit fields (0–120); `backend/services/download_builder.py` shifts the catch-up start and extends duration once. Source inspection only; no live API/recording operations. Current deployed versions were not accessible from this local environment.
 
 Chat-independence/contradiction review: all product guidance above expresses defaults, precedence, deliberate shortening, manual semantics, mismatch behavior and unchanged safety contracts without requiring the conversation. Existing ADR-003 remains authoritative for unset options and matching policy.
+
+## ADR-015: Publish the padding feature as 0.3.0-beta.1
+
+The operator approved “promote to the next beta version” on 2026-10-21, limited to
+plugin source/dev/tag, testing registry dev and required workspace records. Fresh
+remote inspection found dev `c46f246c4c2a219c9d72ca7309a15c1777aa35fc` and latest
+`v0.2.13-beta.3`; the backward-compatible feature increments the minor version to
+`0.3.0-beta.1`. This supersedes ADR-014's publication-pending limit. There is no
+source dev-test branch/promotion requirement; use the documented standalone dev
+and migrated testing registry dev, without creating a new permanent channel.
+A beta uses an immutable tag archive without a GitHub Release. Stable main, live
+installation, Mustarrd changes, schedule rewrites and service restarts are excluded.
+
+Governance reconciliation reviewed the complete central diff from the applied
+`9dcd9b79…` baseline to `687a86e5…`: local-first lifecycle, focused established-task
+history, exact-SHA acceptance, approval continuity, and durable workspace status
+checkpoints. These change process, not padding/API/default/safety contracts.
+Align AGENT.md and retain all product decisions and outstanding production gates.
+No contradiction remains after the documented lifecycle/authority amendments.
+
+Compatibility refresh: official Dispatcharr v0.32.0
+`c52bf87acb7ff2d787d6dcfb9fe3d39999585912` versus v0.31.0
+`bcbb68c4f054ee56383a41604cfcd7302b85da66`: installer/API/model/Field contracts are
+unchanged; the relevant loader diff changes log level only. Recording offset
+materialization remains unchanged. Fresh Mustarrd upstream main remains inspected
+`a6e5fac5024d9eae8db5846066fa1e319c321a5c`; no new API or server change is required.
+Validate both official installer/loaders, prior-beta overwrite and installed tests
+on the exact beta commit. No live compatibility claim; existing dependency audit
+remains a production gate. Decision closure and chat-independence review confirm
+explicit scope/version/precedence/defaults and publication-versus-installation.

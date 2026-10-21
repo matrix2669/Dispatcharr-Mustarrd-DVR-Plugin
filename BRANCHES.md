@@ -56,8 +56,17 @@ All 14 branches from `v0.1.0` through `v0.2.12` were converted to annotated tags
 
 ### `feature/independent-recording-padding`
 
-- Base: fresh `origin/dev` at `c46f246c4c2a219c9d72ca7309a15c1777aa35fc`; target `dev` only after approval.
-- Scope: independent optional pre/post padding in minutes, validation, payload/readback tests and documentation. No live operations, publication, registry changes or version bump.
-- Governance: ordinary standalone branch work follows the explicit “Standards lifecycle — operator clarification, 2026-09-26” in authoritative workspace AI-INSTRUCTIONS.md/AGENT-STANDARD.md. This scopes the older pre-work reconciliation wording to required boundaries. Applied baseline remains unchanged; check reports drift (applied `9dcd9b79…`, current `687a86e5…`). Reconcile before promotion; do not advance the fingerprint merely to silence the check.
-- Publication: local-only by explicit task restriction; source checkpoint push and workspace-main synchronization pending approval. No integration, tags, Releases, registry or installation authorized.
-- Validation: 34 source unit tests, Python compilation, JSON/version agreement and diff checks pass. Pinned official Dispatcharr 0.31.0 disposable installation/loading/default merge and 16 installed-package regressions pass. Independent review found an oversized-integer validation edge; fixed with regression coverage. Final independent re-review reports no remaining blocking findings and independently reran all 34 tests and diff checks. No live checks or CI publication performed.
+- Base: dev `c46f246c4c2a219c9d72ca7309a15c1777aa35fc`; target dev.
+- Implementation checkpoint: `1d2f371d29decffddf0d07e790fe9078d47c53d9`.
+- Approved next-beta scope: prepare 0.3.0-beta.1, reconcile standards, publish
+  owning source/dev/tag and testing registry dev. Stable main, GitHub Release,
+  live installation, Mustarrd changes and recording operations remain excluded.
+- No source dev-test branch is prescribed; testing registry uses dev after the
+  established migration. Keep existing source main and all prior tags intact.
+- Original 34 source tests and 16 installed-package tests passed; independent
+  review fixed an oversized-integer edge and re-review found no blockers.
+- Release candidate requires exact-commit CI, independent review and disposable
+  official 0.31.0/0.32.0 install/old-beta overwrite/default merging/regressions.
+  Record completed publication evidence in the workspace checkpoint.
+- Governance: reviewed central lifecycle/approval/exact-SHA policy changes and
+  aligned AGENT.md; reconcile the applied baseline for this promotion boundary.

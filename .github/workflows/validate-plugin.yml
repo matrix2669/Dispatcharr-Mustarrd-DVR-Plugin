@@ -10,8 +10,15 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dispatcharr:
+          - bcbb68c4f054ee56383a41604cfcd7302b85da66
+          - c52bf87acb7ff2d787d6dcfb9fe3d39999585912
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -30,8 +37,9 @@ jobs:
           git diff --check
       - name: Disposable official Dispatcharr installer and loader
         run: |
-          curl --fail --location --silent --show-error https://api.github.com/repos/Dispatcharr/Dispatcharr/tarball/bcbb68c4f054ee56383a41604cfcd7302b85da66 -o /tmp/dispatcharr.tar.gz
+          curl --fail --location --silent --show-error https://api.github.com/repos/Dispatcharr/Dispatcharr/tarball/${{ matrix.dispatcharr }} -o /tmp/dispatcharr.tar.gz
           mkdir /tmp/dispatcharr-official
           tar -xzf /tmp/dispatcharr.tar.gz -C /tmp/dispatcharr-official --strip-components=1
           git archive --format=zip --prefix=source/ HEAD -o /tmp/plugin.zip
-          python3 scripts/validate_dispatcharr.py /tmp/dispatcharr-official /tmp/plugin.zip
+          git archive --format=zip --prefix=source/ v0.2.13-beta.3 -o /tmp/previous-plugin.zip
+          python3 scripts/validate_dispatcharr.py /tmp/dispatcharr-official /tmp/plugin.zip /tmp/previous-plugin.zip
